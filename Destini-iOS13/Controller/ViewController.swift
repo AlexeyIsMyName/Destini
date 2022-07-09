@@ -14,10 +14,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var choice1Button: UIButton!
     @IBOutlet weak var choice2Button: UIButton!
     
-    let example = Story(title: "You see a fork in the road.",
-                        choice1: "Take a left.",
-                        choice2: "Take a right.")
-    
     let stories = [
         Story(title: "You see a fork in the road.",
               choice1: "Take a left.",
@@ -32,15 +28,29 @@ class ViewController: UIViewController {
               choice2: "Check for traps.")
     ]
     
+     var storyTrack = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        storyLabel.text = example.title
-        choice1Button.setTitle(example.choice1, for: .normal)
-        choice2Button.setTitle(example.choice2, for: .normal)
+        updateUI()
     }
     
     @IBAction func choiceMade(_ sender: UIButton) {
+        if let title = sender.currentTitle {
+            if title == stories[storyTrack].choice1 {
+                storyTrack += 1
+            } else {
+                storyTrack += 2
+            }
+        }
         
+        updateUI()
+    }
+    
+    private func updateUI() {
+        storyLabel.text = stories[storyTrack].title
+        choice1Button.setTitle(stories[storyTrack].choice1, for: .normal)
+        choice2Button.setTitle(stories[storyTrack].choice2, for: .normal)
     }
 }
 
